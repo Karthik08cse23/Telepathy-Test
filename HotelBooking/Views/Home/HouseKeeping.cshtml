@@ -1,0 +1,32 @@
+﻿@model List<HotelBooking.Models.AvailableRooms>
+@{
+    ViewBag.Title = "HouseKeeping";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<label > Vacant & Repaired Rooms:</label>
+
+<select class="vacantRepairedRooms">
+    <option value="0">--Select Room--</option>
+    @{
+        foreach (var item in Model)
+        {
+            <option data-html="@item.roomStatus" value="@item.roomNo">@item.roomNo</option>
+        }
+    }
+
+</select>
+
+<label> Vacant & Repaired Rooms:</label>
+<select class="statusChange">
+
+    <option value="0">--Select Status--</option>
+</select>
+
+
+<button class="btnVacant bg-warning">Submit</button>
+
+<label class="submittedLabel"> </label>
+
+

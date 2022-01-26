@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="HotelEnum.cs" />
     <Compile Include="Models\AvailableRooms.cs" />
+    <Compile Include="Models\HouseKeeping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAvailableRoomRepository.cs" />
     <Compile Include="Service\AvailableRoomService.cs" />
@@ -241,6 +242,7 @@
     <Content Include="Views\Home\BookRoom.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\CheckOut.cshtml" />
+    <Content Include="Views\Home\HouseKeeping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

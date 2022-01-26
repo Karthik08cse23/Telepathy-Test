@@ -52,6 +52,50 @@
             }
         });
     });
+
+    $(".vacantRepairedRooms").on("change", function () {
+        debugger;
+        
+        if ($(this).find(':selected').attr("data-html") == "Vaccant") {
+            $(".statusChange").find("option[value='3']").remove();
+            $(".statusChange").find("option[value='1']").remove();
+            $(".statusChange").find("option[value='4']").remove();
+            $(".statusChange").append("<option value='1'>Available</option>");
+            $(".statusChange").append("<option value='4'>Repaired</option>");
+        }
+        else if ($(this).find(':selected').attr("data-html") == "Repair") {
+            $(".statusChange").find("option[value='3']").remove();
+            $(".statusChange").find("option[value='1']").remove();
+            $(".statusChange").find("option[value='4']").remove();
+            $(".statusChange").append("<option value='3'>Vaccant</option>");
+        }
+        else {
+            $(".statusChange").find("option[value='1']").remove();
+            $(".statusChange").find("option[value='4']").remove();
+            $(".statusChange").find("option[value='3']").remove();
+        }
+    });
+
+    $(".btnVacant").on("click", function () {
+        debugger;
+        var selectedRoom = $(".vacantRepairedRooms").val();
+        var selectedStatus = $(".statusChange").val();
+        var model = { roomNo: selectedRoom, Status: selectedStatus };
+        $.ajax({
+            url: "/api/HotelRooms/HouseKeeping/",
+            type: 'POST',
+            data:  model ,
+            success: function () {
+                debugger;
+                $(".CheckedOutRoom").text(occupiedRoom);
+                $(".occupiedRoom").find("option[value=" + occupiedRoom + "]").remove();
+            },
+            error: function (response) {
+                debugger;
+
+            }
+        });
+    });
 });
 
 

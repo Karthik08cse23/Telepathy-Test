@@ -14,5 +14,7 @@ namespace HotelBooking.Repository
         List<string> BookRooms(int count);
 
         void CheckOut(string RoomNo);
+
+        //int GetStatus(string RoomNo);
     }
 }

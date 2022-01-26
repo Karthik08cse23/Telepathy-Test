@@ -39,5 +39,14 @@ namespace HotelBooking.Controllers
 
             return View(occupiedRooms);
         }
+
+        public ActionResult HouseKeeping()
+        {
+            ViewBag.Message = "House Keeping Wizard";
+            List<AvailableRooms> vacantRepairedRooms = new List<AvailableRooms>();
+            vacantRepairedRooms = availableRoomService.GetRooms().Where(x => x.roomStatus == HotelEnum.Status.Vaccant || x.roomStatus== HotelEnum.Status.Repair).ToList();
+
+            return View(vacantRepairedRooms);
+        }
     }
 }

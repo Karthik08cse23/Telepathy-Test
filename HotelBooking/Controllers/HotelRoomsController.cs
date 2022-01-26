@@ -45,6 +45,14 @@ namespace HotelBooking.Controllers
             return Json(new { result = "Updated Successfully" });
         }
 
+        [HttpPost]
+        [Route("HouseKeeping")]
+        public IHttpActionResult HouseKeeping(HouseKeeping houseKeeping)
+        {
+            _availableRoomRepository.CheckOut("");
+            return Json(new { result = "Updated Successfully" });
+        }
+
 
 
 
