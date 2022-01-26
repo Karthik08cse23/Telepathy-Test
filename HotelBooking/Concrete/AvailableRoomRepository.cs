@@ -54,5 +54,50 @@ namespace HotelBooking.Concrete
             }
             return roomsList;
         }
+
+        public void CheckOut(string roomNo)
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["AvailableRooms"].ConnectionString;
+            using (conn = new SqlConnection(strcon))
+            {
+                cmd = new SqlCommand("dbo.SPCheckOutRooms", conn);
+
+                using (cmd)
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@roomNo", SqlDbType.NVarChar).Value = roomNo;
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
+
+        public List<string> BookRooms(int count)
+        {
+            List<string> roomsBooked = new List<string>();   
+            DataTable dt = new DataTable();
+            string strcon = ConfigurationManager.ConnectionStrings["AvailableRooms"].ConnectionString;
+            using (conn = new SqlConnection(strcon))
+            {
+                cmd = new SqlCommand("dbo.SPBookRooms", conn);
+                cmd.Parameters.Add("@count", SqlDbType.Int).Value = count;
+                using (cmd)
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    conn.Open();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        string RoomNo = dt.Rows[i]["RoomNo"].ToString();
+                        roomsBooked.Add(RoomNo);
+                    }
+                   
+                }
+                conn.Close();
+            }
+            return roomsBooked;
+        }
     }
 }

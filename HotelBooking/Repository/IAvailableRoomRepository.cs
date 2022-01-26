@@ -10,5 +10,9 @@ namespace HotelBooking.Repository
     public interface IAvailableRoomRepository
     {
         List<AvailableRooms> GetAvailableRooms();
+
+        List<string> BookRooms(int count);
+
+        void CheckOut(string RoomNo);
     }
 }

@@ -18,7 +18,7 @@ namespace HotelBooking
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new {controller= "HotelRooms", id = RouteParameter.Optional }
+                defaults: new {id = RouteParameter.Optional }
             );
 
             var container = new UnityConfiguration().Config();

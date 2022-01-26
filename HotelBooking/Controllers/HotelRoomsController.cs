@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace HotelBooking.Controllers
 {
-    [RoutePrefix("api/HotelRooms/")]
+    [RoutePrefix("api/HotelRooms")]
     public class HotelRoomsController : ApiController
     {
         IAvailableRoomRepository _availableRoomRepository;
@@ -19,31 +19,39 @@ namespace HotelBooking.Controllers
             _availableRoomRepository = availableRoomRepository;
         }
         [HttpGet]
-        public IHttpActionResult Get()
+        [Route("GetRooms")]
+        public IHttpActionResult GetRooms()
         {
             List<AvailableRooms> availableRooms = new List<AvailableRooms>();
-            availableRooms = _availableRoomRepository.GetAvailableRooms();
-            return Json(availableRooms);
+            availableRooms = _availableRoomRepository.GetAvailableRooms().Where(x => x.roomStatus == HotelEnum.Status.Available).ToList();
+            var AvailableCount = availableRooms.Count();
+            return Json(new { count=AvailableCount, availRooms = availableRooms });
         }
 
-
-
-
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPut]
+        [Route("BookRoom/{id}")]
+        public IHttpActionResult BookRoom(int id)
         {
+            List<string> roomsBooked = new List<string>();
+            roomsBooked = _availableRoomRepository.BookRooms(id);
+            return Json(new { bookedRooms = roomsBooked });
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("CheckOut/{id}")]
+        public IHttpActionResult CheckOut(string id)
         {
+            _availableRoomRepository.CheckOut(id);
+            return Json(new { result = "Updated Successfully" });
         }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
-        }
+
+
+
+
+
+
+
     }
 
 }

@@ -1,0 +1,24 @@
+﻿@model List<HotelBooking.Models.AvailableRooms>
+@{
+    ViewBag.Title = "CheckOut";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<label class="label-default"> Occupied Rooms:</label>
+<br />
+<select class="occupiedRoom">
+    @{
+        foreach (var item in Model)
+        {
+            <option value="@item.roomNo">@item.roomNo</option>
+        }
+    }
+
+</select>
+
+<button class="btnCheckout bg-warning">Check Out</button>
+
+CheckOut Room: <label class="CheckedOutRoom"> </label>
+
+

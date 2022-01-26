@@ -31,11 +31,13 @@ namespace HotelBooking.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult CheckOut()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Check Out Rooms";
+            List<AvailableRooms> occupiedRooms = new List<AvailableRooms>();
+            occupiedRooms = availableRoomService.GetRooms().Where(x => x.roomStatus == HotelEnum.Status.Occupied).ToList();
 
-            return View();
+            return View(occupiedRooms);
         }
     }
 }
