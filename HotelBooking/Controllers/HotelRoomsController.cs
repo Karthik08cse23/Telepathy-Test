@@ -25,7 +25,7 @@ namespace HotelBooking.Controllers
             List<AvailableRooms> availableRooms = new List<AvailableRooms>();
             availableRooms = _availableRoomRepository.GetAvailableRooms().Where(x => x.roomStatus == HotelEnum.Status.Available).ToList();
             var AvailableCount = availableRooms.Count();
-            return Json(new { count=AvailableCount, availRooms = availableRooms });
+            return Json(new { count = AvailableCount, availRooms = availableRooms });
         }
 
         [HttpPut]
@@ -42,24 +42,16 @@ namespace HotelBooking.Controllers
         public IHttpActionResult CheckOut(string id)
         {
             _availableRoomRepository.CheckOut(id);
-            return Json(new { result = "Updated Successfully" });
+            return Json(new { result = "Check Out Successful" });
         }
 
         [HttpPost]
         [Route("HouseKeeping")]
         public IHttpActionResult HouseKeeping(HouseKeeping houseKeeping)
         {
-            _availableRoomRepository.CheckOut("");
-            return Json(new { result = "Updated Successfully" });
+            _availableRoomRepository.HouseKeeping(houseKeeping);
+            return Json(new { result = "HouseKeeping Successful" });
         }
-
-
-
-
-
-
-
-
     }
 
 }

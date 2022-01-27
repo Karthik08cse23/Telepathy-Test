@@ -15,6 +15,6 @@ namespace HotelBooking.Repository
 
         void CheckOut(string RoomNo);
 
-        //int GetStatus(string RoomNo);
+        void HouseKeeping(HouseKeeping houseKeeping);
     }
 }

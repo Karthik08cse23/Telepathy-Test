@@ -10,7 +10,7 @@ using System.Web;
 
 namespace HotelBooking.Concrete
 {
-    public class AvailableRoomRepository:IAvailableRoomRepository
+    public class AvailableRoomRepository : IAvailableRoomRepository
     {
         SqlConnection conn;
         SqlCommand cmd;
@@ -29,7 +29,7 @@ namespace HotelBooking.Concrete
                     conn.Open();
                     SqlDataAdapter da = new SqlDataAdapter(cmd);
                     da.Fill(dt);
-                    for(int i=0;i< dt.Rows.Count; i++)
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
                         AvailableRooms rooms = new AvailableRooms();
                         rooms.roomNo = dt.Rows[i]["RoomNo"].ToString();
@@ -42,7 +42,7 @@ namespace HotelBooking.Concrete
                     //    while (reader.Read())
                     //    {
                     //        AvailableRooms rooms = new AvailableRooms();
-                            
+
                     //        rooms.roomNo = Convert.ToInt32(reader["RoomNo"]);
                     //        rooms.roomStatus = ((HotelEnum.Status)(Convert.ToInt32(reader["Status"])));
                     //        roomsList.Add(rooms);
@@ -53,7 +53,26 @@ namespace HotelBooking.Concrete
                 conn.Close();
             }
             return roomsList;
-        } 
+        }
+
+        public void HouseKeeping(HouseKeeping houseKeeping)
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["AvailableRooms"].ConnectionString;
+            using (conn = new SqlConnection(strcon))
+            {
+                cmd = new SqlCommand("dbo.SPHouseKeeping", conn);
+
+                using (cmd)
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@roomNo", SqlDbType.NVarChar).Value = houseKeeping.roomNo;
+                    cmd.Parameters.Add("@status", SqlDbType.Int).Value = houseKeeping.Status;
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                conn.Close();
+            }
+        }
 
         public void CheckOut(string roomNo)
         {
@@ -75,7 +94,7 @@ namespace HotelBooking.Concrete
 
         public List<string> BookRooms(int count)
         {
-            List<string> roomsBooked = new List<string>();   
+            List<string> roomsBooked = new List<string>();
             DataTable dt = new DataTable();
             string strcon = ConfigurationManager.ConnectionStrings["AvailableRooms"].ConnectionString;
             using (conn = new SqlConnection(strcon))
@@ -93,7 +112,7 @@ namespace HotelBooking.Concrete
                         string RoomNo = dt.Rows[i]["RoomNo"].ToString();
                         roomsBooked.Add(RoomNo);
                     }
-                   
+
                 }
                 conn.Close();
             }

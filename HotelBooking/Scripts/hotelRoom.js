@@ -86,9 +86,28 @@
             type: 'POST',
             data:  model ,
             success: function () {
-                debugger;
-                $(".CheckedOutRoom").text(occupiedRoom);
-                $(".occupiedRoom").find("option[value=" + occupiedRoom + "]").remove();
+                if (selectedStatus == "1") {
+                    $(".vacantRepairedRooms").find("option[value=" + selectedRoom + "]").remove();
+                    $(".statusChange").find("option[value='1']").remove();
+                    $(".statusChange").find("option[value='4']").remove();
+                    $(".statusChange").find("option[value='3']").remove();
+                }
+                else if (selectedStatus == "4") {
+                    alert(selectedRoom + " Under repair.")
+                    $(".statusChange").find("option[value='1']").remove();
+                    $(".statusChange").find("option[value='4']").remove();
+                    $(".statusChange").find("option[value='3']").remove();
+                    $(".vacantRepairedRooms").find("option[value=" + selectedRoom + "]").attr("data-html", "Repair");
+                    $(".vacantRepairedRooms").val(0);
+                }
+                else {
+                    alert(selectedRoom + " Repair done. Moved to Vacant.");
+                    $(".statusChange").find("option[value='1']").remove();
+                    $(".statusChange").find("option[value='4']").remove();
+                    $(".statusChange").find("option[value='3']").remove();
+                    $(".vacantRepairedRooms").find("option[value=" + selectedRoom + "]").attr("data-html", "Vaccant");
+                    $(".vacantRepairedRooms").val(0);
+                }
             },
             error: function (response) {
                 debugger;
