@@ -21,7 +21,7 @@ namespace HotelBooking.Controllers
             List<AvailableRooms> availableRooms = new List<AvailableRooms>();
             availableRooms = availableRoomService.GetRooms();
             ViewData["ReadyRooms"] = availableRooms.Where(x => x.roomStatus == HotelEnum.Status.Available).Count();
-            return View();
+            return View(availableRooms);
         }
 
         public ActionResult BookRoom()

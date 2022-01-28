@@ -23,7 +23,7 @@ namespace HotelBooking
 
             var container = new UnityConfiguration().Config();
             config.DependencyResolver = new UnityResolver(container);
-
+            config.Filters.Add(new HotelBooking.Filters.ExceptionFilters());
             // WebAPI when dealing with JSON & JavaScript!
             // Setup json serialization to serialize classes to camel (std. Json format)
             var formatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;

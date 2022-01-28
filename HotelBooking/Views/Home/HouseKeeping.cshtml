@@ -1,32 +1,28 @@
 ﻿@model List<HotelBooking.Models.AvailableRooms>
-@{
-    ViewBag.Title = "HouseKeeping";
-}
-<h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
-
-<label > Vacant & Repaired Rooms:</label>
-
-<select class="vacantRepairedRooms">
-    <option value="0">--Select Room--</option>
-    @{
-        foreach (var item in Model)
-        {
-            <option data-html="@item.roomStatus" value="@item.roomNo">@item.roomNo</option>
+<div class="jumbotron" style="height:300px">
+    <label style="margin-top:0px;color:sandybrown;width:200px;">Vacant & Repaired Rooms: <span class="text-info"></span></label>
+    @*<label> Vacant & Repaired Rooms:</label>*@
+    <select class="vacantRepairedRooms form-control">
+        <option value="0">--Select Room--</option>
+        @{
+            foreach (var item in Model)
+            {
+                <option data-html="@item.roomStatus" value="@item.roomNo">@item.roomNo</option>
+            }
         }
-    }
+    </select>
+    <br />
 
-</select>
+    <div>
+        <label style="margin-top:30px;color:sandybrown;width:200px;"> Change Status</label>
+        <select class="statusChange form-control">
+            <option value="0">--Select Status--</option>
+        </select>
+    </div>
 
-<label> Vacant & Repaired Rooms:</label>
-<select class="statusChange">
-
-    <option value="0">--Select Status--</option>
-</select>
-
-
-<button class="btnVacant bg-warning">Submit</button>
-
-<label class="submittedLabel"> </label>
-
+    <button style="margin-top:30px;color:white;float:left" class="col-sm-2 btnVacant btn-primary">Submit</button>
+    @*<button class=" bg-warning">Submit</button>*@
+    <label style="margin-top:90px;color:forestgreen" class="submittedLabel">  </label>
+</div>
 

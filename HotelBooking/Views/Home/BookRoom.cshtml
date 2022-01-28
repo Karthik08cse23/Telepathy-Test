@@ -1,27 +1,23 @@
-﻿@{
-    ViewBag.Title = "BookRoom";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+﻿<h3>@ViewBag.Message</h3>
+<div class="jumbotron" style="height:500px">
+    <div class="availableCount">
+        <h3 style="margin-top:20px;color:burlywood">Available Rooms : <span class="text-info"></span></h3>
+        <button class="btn-default mt-10 btnAvailableCount"> Get Room Count</button>
+    </div>
+    <br />
+    <div  style="width:70%;">
 
-<div class="availableCount">
-    <p class="text-info">Click to Check Available Room Count</p>
+        <span style="margin-top:0px;color:crimson;float:left"> No of Rooms : <input type="number" min="0" class="form-control col-sm-3 roomCount" /></span>
 
-    <button class="btn-default mt-10 btnAvailableCount"> Get Room Count</button>
+        <br />
 
+        <button style="margin-top:3px;color:white;float:left" class="btn-success col-sm-2 bookRoom"> Book Room</button>
+    </div>
+    <br />
+    <div style="margin-top:30px; margin-left:-400px;color:yellowgreen;float:left">
+
+
+        <label>Booked Rooms</label>
+        <ul class="bookedRoomList"></ul>
+    </div>
 </div>
-<br />
-<div class=" bg-primary"></div>
-
-
-<label class="label-default"> No of Rooms:</label>
-<br />
-<input type="text" class="form-control col-sm-2 roomCount"/>
-<br />
-<button class="btn-success bookRoom"> Book Room</button> 
-
-<h2>Booked Rooms</h2>
-<ul class="bookedRoomList">
-    
-</ul>
- 

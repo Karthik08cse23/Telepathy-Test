@@ -1,24 +1,28 @@
 ﻿@model List<HotelBooking.Models.AvailableRooms>
-@{
-    ViewBag.Title = "CheckOut";
-}
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h3>Select a Room to Check Out</h3>
+<div class="jumbotron" style="height:300px">
 
-<label class="label-default"> Occupied Rooms:</label>
-<br />
-<select class="occupiedRoom">
-    @{
-        foreach (var item in Model)
-        {
-            <option value="@item.roomNo">@item.roomNo</option>
-        }
-    }
+    @*<div class="form-group pull-right">
+            <label for="tipo" class="control-label">Tipo</label>
+            <select name="tipo" id="tipoProveedor" style="width: 344px" class="form-control">
+                <option value="todos">Todos</option>
+            </select>
+        </div>*@
+    <div class="row form-group">
+        <h3 style="margin-top:0px;color:black">Occupied Rooms : <span class="text-info"></span></h3>
 
-</select>
-
-<button class="btnCheckout bg-warning">Check Out</button>
-
-CheckOut Room: <label class="CheckedOutRoom"> </label>
-
+        <select class="occupiedRoom form-control">
+            @{
+                foreach (var item in Model)
+                {
+                    <option value="@item.roomNo">@item.roomNo</option>
+                }
+            }
+        </select>
+    </div>
+    <button style="margin-top:3px;color:white;float:left" class="col-sm-2 btnCheckout btn-warning">Check Out</button>
+    <div style="margin-top:50px; margin-left:-200px;color:yellowgreen;float:left">
+        <span style="color:peru;"> CheckOut Room :</span> <label class="CheckedOutRoom"> </label>
+    </div>
+</div>
 

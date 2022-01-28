@@ -1,15 +1,17 @@
 ﻿$(document).ready(function () {
+    $(".btnAvailableCount").hide();
     $(".btnAvailableCount").on("click", function () {
         debugger;
         $.ajax({
-            url: "/api/HotelRooms/GetRooms",
+            url: "/api/HotelRooms/GetRoomsCount",
             type: 'GET',
-            success: function (data) {
-                $(".availableCount").find('p').text(data.count);
-                alert(data.count);
+            success: function (count) {
+                $(".availableCount").find('span').text(count);
             },
             error: function (response) {
-                debugger;
+                if (response.status == "417") {
+                    alert("Error while running your input: Kindly contact Admin");
+                }
 
             }
         });
@@ -21,41 +23,40 @@
         $.ajax({
             url: "/api/HotelRooms/BookRoom/" + roomCount,
             type: 'PUT',
-            success: function (data) {
-                jQuery.each(data.bookedRooms, function (i, val) {
+            success: function (bookedRooms) {
+                $(".bookedRoomList").empty();
+                jQuery.each(bookedRooms, function (i, val) {
                     $(".bookedRoomList").append("<li> " + val + "</li>");
                 });
-                alert(data.bookedRooms);
                 $(".btnAvailableCount").trigger("click");
             },
             error: function (response) {
-                debugger;
+                if (response.status == "417") {
+                    alert("Error while running your input: Kindly contact Admin");
+                }
 
             }
         });
     });
 
     $(".btnCheckout").on("click", function () {
-        debugger;
         var occupiedRoom = $(".occupiedRoom").val();
         $.ajax({
             url: "/api/HotelRooms/CheckOut/" + occupiedRoom,
             type: 'PUT',
             success: function () {
-                debugger;
                 $(".CheckedOutRoom").text(occupiedRoom);
                 $(".occupiedRoom").find("option[value="+occupiedRoom +"]").remove();
             },
             error: function (response) {
-                debugger;
-
+                if (response.status == "417") {
+                    alert("Error while running your input: Kindly contact Admin");
+                }
             }
         });
     });
 
     $(".vacantRepairedRooms").on("change", function () {
-        debugger;
-        
         if ($(this).find(':selected').attr("data-html") == "Vaccant") {
             $(".statusChange").find("option[value='3']").remove();
             $(".statusChange").find("option[value='1']").remove();
@@ -77,7 +78,6 @@
     });
 
     $(".btnVacant").on("click", function () {
-        debugger;
         var selectedRoom = $(".vacantRepairedRooms").val();
         var selectedStatus = $(".statusChange").val();
         var model = { roomNo: selectedRoom, Status: selectedStatus };
@@ -91,30 +91,35 @@
                     $(".statusChange").find("option[value='1']").remove();
                     $(".statusChange").find("option[value='4']").remove();
                     $(".statusChange").find("option[value='3']").remove();
+                    $(".submittedLabel").text("Room " + selectedRoom + " now available to book!");
                 }
                 else if (selectedStatus == "4") {
-                    alert(selectedRoom + " Under repair.")
                     $(".statusChange").find("option[value='1']").remove();
                     $(".statusChange").find("option[value='4']").remove();
                     $(".statusChange").find("option[value='3']").remove();
                     $(".vacantRepairedRooms").find("option[value=" + selectedRoom + "]").attr("data-html", "Repair");
                     $(".vacantRepairedRooms").val(0);
+                    $(".submittedLabel").text("Room " + selectedRoom + " under Repair!");
                 }
                 else {
-                    alert(selectedRoom + " Repair done. Moved to Vacant.");
                     $(".statusChange").find("option[value='1']").remove();
                     $(".statusChange").find("option[value='4']").remove();
                     $(".statusChange").find("option[value='3']").remove();
                     $(".vacantRepairedRooms").find("option[value=" + selectedRoom + "]").attr("data-html", "Vaccant");
                     $(".vacantRepairedRooms").val(0);
+                    $(".submittedLabel").text("Room " + selectedRoom + " repair work done!");
                 }
             },
             error: function (response) {
-                debugger;
+                if (response.status == "417") {
+                    alert("Error while running your input: Kindly contact Admin");
+                }
 
             }
         });
     });
+
+    $(".btnAvailableCount").trigger("click");
 });
 
 

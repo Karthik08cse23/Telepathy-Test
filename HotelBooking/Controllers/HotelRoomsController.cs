@@ -1,4 +1,5 @@
-﻿using HotelBooking.Models;
+﻿using HotelBooking.Filters;
+using HotelBooking.Models;
 using HotelBooking.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Web.Http;
 namespace HotelBooking.Controllers
 {
     [RoutePrefix("api/HotelRooms")]
+    [ExceptionFilters]
     public class HotelRoomsController : ApiController
     {
         IAvailableRoomRepository _availableRoomRepository;
@@ -18,6 +20,17 @@ namespace HotelBooking.Controllers
 
             _availableRoomRepository = availableRoomRepository;
         }
+
+        [HttpGet]
+        [Route("GetRoomsCount")]
+        public IHttpActionResult GetRoomsCount()
+        {
+            List<AvailableRooms> availableRooms = new List<AvailableRooms>();
+            availableRooms = _availableRoomRepository.GetAvailableRooms().Where(x => x.roomStatus == HotelEnum.Status.Available).ToList();
+            var count = availableRooms.Count();
+            return Ok(count);
+        }
+
         [HttpGet]
         [Route("GetRooms")]
         public IHttpActionResult GetRooms()
@@ -25,16 +38,16 @@ namespace HotelBooking.Controllers
             List<AvailableRooms> availableRooms = new List<AvailableRooms>();
             availableRooms = _availableRoomRepository.GetAvailableRooms().Where(x => x.roomStatus == HotelEnum.Status.Available).ToList();
             var AvailableCount = availableRooms.Count();
-            return Json(new { count = AvailableCount, availRooms = availableRooms });
+            return Ok(availableRooms);
         }
 
         [HttpPut]
         [Route("BookRoom/{id}")]
         public IHttpActionResult BookRoom(int id)
         {
-            List<string> roomsBooked = new List<string>();
-            roomsBooked = _availableRoomRepository.BookRooms(id);
-            return Json(new { bookedRooms = roomsBooked });
+            List<string> bookedRooms = new List<string>();
+            bookedRooms = _availableRoomRepository.BookRooms(id);
+            return Ok( bookedRooms );
         }
 
         [HttpPut]
@@ -42,7 +55,7 @@ namespace HotelBooking.Controllers
         public IHttpActionResult CheckOut(string id)
         {
             _availableRoomRepository.CheckOut(id);
-            return Json(new { result = "Check Out Successful" });
+            return Ok("Check Out Successful" );
         }
 
         [HttpPost]
@@ -50,7 +63,7 @@ namespace HotelBooking.Controllers
         public IHttpActionResult HouseKeeping(HouseKeeping houseKeeping)
         {
             _availableRoomRepository.HouseKeeping(houseKeeping);
-            return Json(new { result = "HouseKeeping Successful" });
+            return Ok("HouseKeeping Successful" );
         }
     }
 
